@@ -24,6 +24,6 @@ public class Main {
         Position pacman = new Position(7, 4);
         PacmanState test = new PacmanState(board, pacman);
 
-        System.out.println(test);
+        
     }
 }

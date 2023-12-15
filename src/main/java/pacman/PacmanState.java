@@ -2,16 +2,20 @@
 /// we consider a state is constituted of Pacman's position and the content of each box.
 package pacman;
 
+import java.util.*;
+
 public class PacmanState {
     char[][] board;
     Position pacmanPosition;
+    int score = 0;
 
-    public PacmanState(char[][] board, Position pacmanPosition) {
+    public PacmanState(char[][] board, Position pacmanPosition, int score) {
         this.board = board;
         this.pacmanPosition = pacmanPosition;
+        this.score = score;
     }
 
-    public PacmanState(String board, Position pacmanPosition) {
+    public PacmanState(String board, Position pacmanPosition, int score) {
         this.pacmanPosition = pacmanPosition;
         String[] lines = board.split("\n");
         this.board = new char[lines.length][lines[0].length()];
@@ -20,6 +24,7 @@ public class PacmanState {
                 this.board[i][j] = lines[i].charAt(j);
             }
         }
+        this.score = score;
     }
     
     public int getWidth() {
@@ -28,6 +33,10 @@ public class PacmanState {
 
     public int getHeight() {
         return board[0].length;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public char get(Position position) {
@@ -53,5 +62,54 @@ public class PacmanState {
             state = state + "\n";
         }
         return state;
+    }
+
+    public Position findPacman() {
+        return this.pacmanPosition;
+    }
+    
+    public ArrayList findFoods() {
+        ArrayList foods = new ArrayList();
+        for (int i = 0 ; i < this.board.length ; i++) {
+            for (int j = 0 ; j < this.board[0].length() ; j++) {
+                if (this.get(new Position(i, j)) == '.') foods.add(new Position(i, j));
+            }
+        }
+        return foods;
+    }
+
+    public ArrayList findPossibleMoves() {
+        ArrayList moves = new ArrayList();
+        Position left = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() - 1);
+        if (left.get() == ' ') moves.add(left);
+        Position right = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() + 1);
+        if (right.get() == ' ') moves.add(right);
+        Position upper = new Position(pacmanPosition.getRow() + 1, pacmanPosition.getCol());
+        if (upper.get() == ' ') moves.add(upper);
+        Position lower = new Position(pacmanPosition.getRow() - 1, pacmanPosition.getCol());
+        if (lower.get() == ' ') moves.add(lower);
+        return moves;
+    }
+
+    public char[][] copyBoard() {
+        return this.board.clone();
+    }
+
+    public PacmanState move(Position to) {
+        PacmanState newboard = new PacmanState(this.copyBoard(), to, score + 1);
+
+        newboard.set(this.pacmanPosition, ' ');
+        newboard.set(to, 'P');
+        
+
+        return newboard;
+    }
+
+    public boolean isFinalState() {
+        return this.findFoods().isEmpty();
+    }
+
+    public boolean statesEquality(PacmanState position) {
+        return this.pacmanPosition.equals(position.pacmanPosition) && this.board.deepEquals(position.board);
     }
 }
