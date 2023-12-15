@@ -14,19 +14,20 @@ public class PacmanState {
     public PacmanState(String board, Position pacmanPosition) {
         this.pacmanPosition = pacmanPosition;
         String[] lines = board.split("\n");
-        for (int i = 0 ; i < lines[0].length() ; i++) {
-            for (int j = 0 ; j < lines.length ; j++) {
+        this.board = new char[lines.length][lines[0].length()];
+        for (int i = 0 ; i < lines.length ; i++) {
+            for (int j = 0 ; j < lines[0].length() ; j++) {
                 this.board[i][j] = lines[i].charAt(j);
             }
         }
     }
     
     public int getWidth() {
-        return board[0].length;
+        return board.length;
     }
 
     public int getHeight() {
-        return board.length;
+        return board[0].length;
     }
 
     public char get(Position position) {
@@ -43,7 +44,7 @@ public class PacmanState {
         board[row][col] = value;
     }
 
-    public String getState() {
+    public String toString() {
         String state = "";
         for (int i = 0 ; i < this.getWidth() ; i++) {
             for (int j = 0 ; j < this.getHeight() ; j++) {
