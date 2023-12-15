@@ -2,8 +2,8 @@ package pacman;
 
 
 public class Main {
-  public static void main(String[] args) {
-    String board = """
+    public static void main(String[] args) {
+        String board = """
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             %                                          %
             % %%%% %%%%%%%%%%%          %%%%%%%%%%     %
@@ -20,7 +20,7 @@ public class Main {
             %   % %  %   %    %   %                   .%
             %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             """;
-    Position pacman = new Position(7, 4);
+        Position pacman = new Position(7, 4);
 
-  }
+    }
 }
