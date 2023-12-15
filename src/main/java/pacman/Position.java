@@ -20,11 +20,11 @@ public class Position {
     return this.col;
   }
 
-  public boolean equality(Position pos) {
+  public boolean equals(Position pos) {
     return this.row == pos.getRow() && this.col == pos.getCol();
   }
 
-  public int getHash() {
+  public int hashCode() {
     return Integer.hashCode(row) * 31 + Integer.hashCode(col);
   }
 

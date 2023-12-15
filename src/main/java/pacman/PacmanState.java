@@ -13,43 +13,44 @@ public class PacmanState {
 
   public PacmanState(String board, Position pacmanPosition) {
     this.pacmanPosition = pacmanPosition;
-    String[] lines = new board.split("\n");
+    String[] lines = board.split("\n");
     for (int i = 0 ; i < lines[0].length() ; i++) {
-      for (int j = 0 ; j < lines.length() ; j++) {
+      for (int j = 0 ; j < lines.length ; j++) {
         this.board[i][j] = lines[i].charAt(j);
       }
     }
   }
   
   public int getWidth() {
-    return board[0].length();
+    return board[0].length;
   }
 
   public int getHeight() {
-    return board.length();
+    return board.length;
   }
 
   public char get(Position position) {
-    int row = new position.getRow();
-    int col = new position.getCol();
+    int row = position.getRow();
+    int col = position.getCol();
 
     return board[row][col];
   }
 
   public void set(Position position, char value) {
-    int row = new position.getRow();
-    int col = new position.getCol();
+    int row = position.getRow();
+    int col = position.getCol();
 
     board[row][col] = value;
   }
 
   public String getState() {
-    String state = new String();
+    String state = "";
     for (int i = 0 ; i < this.getWidth() ; i++) {
       for (int j = 0 ; j < this.getHeight() ; j++) {
-        state = state + this.get(new Position(i, j)).toString();
+        state = state + String.valueOf(this.get(new Position(i, j)));
       }
       state = state + "\n";
     }
+    return state;
   }
 }
