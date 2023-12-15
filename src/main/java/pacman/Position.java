@@ -4,8 +4,8 @@ package pacman;
 import java.lang.*;
 
 public class Position {
-    int row;
-    int col;
+    private int row;
+    private int col;
 
     public Position(int row, int col) {
         this.row = row;
@@ -28,9 +28,8 @@ public class Position {
         return Integer.hashCode(row) * 31 + Integer.hashCode(col);
     }
 
-    public void showPosition() {
-        System.out.println("row : " + row);
-        System.out.println("col : " + col);
+    public String toString() {
+        return "(" + this.row + "," + this.col + ")"; 
     }
 
     public int dist(Position pos) {
