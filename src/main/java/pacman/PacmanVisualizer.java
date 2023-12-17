@@ -76,9 +76,4 @@ public class PacmanVisualizer {
         setColorLabel('P', labels[pacman.findPacman().getRow()][pacman.findPacman().getCol()]);
         //mainFrame.repaint();
     }
-
-    public static void main(String[] args) {
-        PacmanVisualizer pv = new PacmanVisualizer(10, 10);
-    }
-
 }

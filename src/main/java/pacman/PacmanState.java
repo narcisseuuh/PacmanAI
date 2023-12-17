@@ -71,7 +71,7 @@ public class PacmanState {
     public ArrayList findFoods() {
         ArrayList foods = new ArrayList();
         for (int i = 0 ; i < this.board.length ; i++) {
-            for (int j = 0 ; j < this.board[0].length() ; j++) {
+            for (int j = 0 ; j < this.board[0].length ; j++) {
                 if (this.get(new Position(i, j)) == '.') foods.add(new Position(i, j));
             }
         }
@@ -81,13 +81,13 @@ public class PacmanState {
     public ArrayList findPossibleMoves() {
         ArrayList moves = new ArrayList();
         Position left = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() - 1);
-        if (left.get() == ' ') moves.add(left);
+        if (this.get(left) == ' ') moves.add(left);
         Position right = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() + 1);
-        if (right.get() == ' ') moves.add(right);
+        if (this.get(right) == ' ') moves.add(right);
         Position upper = new Position(pacmanPosition.getRow() + 1, pacmanPosition.getCol());
-        if (upper.get() == ' ') moves.add(upper);
+        if (this.get(upper) == ' ') moves.add(upper);
         Position lower = new Position(pacmanPosition.getRow() - 1, pacmanPosition.getCol());
-        if (lower.get() == ' ') moves.add(lower);
+        if (this.get(lower) == ' ') moves.add(lower);
         return moves;
     }
 
@@ -110,6 +110,6 @@ public class PacmanState {
     }
 
     public boolean statesEquality(PacmanState position) {
-        return this.pacmanPosition.equals(position.pacmanPosition) && this.board.deepEquals(position.board);
+        return this.pacmanPosition.equals(position.pacmanPosition) && Objects.deepEquals(this.board, position.board);
     }
 }
