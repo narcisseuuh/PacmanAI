@@ -18,7 +18,7 @@ public class PacmanSimulator {
          this.state.move(pacman.chooseAction(state));
          this.pv.update(state);
          long time = System.currentTimeMillis();
-         for (long i = time ; i < time + refreshPeriod ; i++);
+         for (long i = time ; i < time + refreshPeriod ; i+= 0.05);
       }
       System.out.println(state.getScore());
    }

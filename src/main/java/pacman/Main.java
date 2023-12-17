@@ -22,8 +22,10 @@ public class Main {
             """;
 
         Position pacman = new Position(7, 4);
-        PacmanState test = new PacmanState(board, pacman, 0);
+        PacmanState state = new PacmanState(board, pacman, 0);
+        PacmanDFSTeleport pacmanDFS = new PacmanDFSTeleport();
 
-        
+        PacmanSimulator simulate = new PacmanSimulator(state, pacmanDFS, 5);
+        simulate.gameLoop();
     }
 }

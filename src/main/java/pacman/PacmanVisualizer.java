@@ -44,7 +44,7 @@ public class PacmanVisualizer {
 
     protected static void setColorLabel(char c, JLabel label) {
         switch (c) {
-            case '%':
+            case '▉':
                 label.setBackground(Color.BLUE);
                 break;
             case 'P':

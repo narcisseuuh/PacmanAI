@@ -28,11 +28,11 @@ public class PacmanState {
     }
     
     public int getWidth() {
-        return board.length;
+        return board[0].length;
     }
 
     public int getHeight() {
-        return board[0].length;
+        return board.length;
     }
 
     public int getScore() {
@@ -55,9 +55,9 @@ public class PacmanState {
 
     public String toString() {
         String state = "";
-        for (int i = 0 ; i < this.getWidth() ; i++) {
-            for (int j = 0 ; j < this.getHeight() ; j++) {
-                state = state + String.valueOf(this.get(new Position(i, j)));
+        for (int row = 0 ; row < this.getHeight() ; row++) {
+            for (int col = 0 ; col < this.getWidth() ; col++) {
+                state = state + String.valueOf(this.get(new Position(row, col)));
             }
             state = state + "\n";
         }
@@ -68,18 +68,18 @@ public class PacmanState {
         return this.pacmanPosition;
     }
     
-    public ArrayList findFoods() {
-        ArrayList foods = new ArrayList();
-        for (int i = 0 ; i < this.board.length ; i++) {
-            for (int j = 0 ; j < this.board[0].length ; j++) {
-                if (this.get(new Position(i, j)) == '.') foods.add(new Position(i, j));
+    public ArrayList<Position> findFoods() {
+        ArrayList<Position> foods = new ArrayList<Position>();
+        for (int row = 0 ; row < this.getHeight() ; row++) {
+            for (int col = 0 ; col < this.getWidth() ; col++) {
+                if (this.get(new Position(row, col)) == '.') foods.add(new Position(row, col));
             }
         }
         return foods;
     }
 
     public ArrayList findPossibleMoves() {
-        ArrayList moves = new ArrayList();
+        ArrayList moves = new ArrayList<Position>();
         Position left = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() - 1);
         if (this.get(left) == ' ') moves.add(left);
         Position right = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() + 1);
@@ -98,7 +98,7 @@ public class PacmanState {
     public PacmanState move(Position to) {
         PacmanState newboard = new PacmanState(this.copyBoard(), to, score + 1);
 
-        newboard.set(this.pacmanPosition, ' ');
+        newboard.set(this.pacmanPosition, 'V');
         newboard.set(to, 'P');
         
 
