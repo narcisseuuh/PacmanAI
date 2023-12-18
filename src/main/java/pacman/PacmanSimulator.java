@@ -1,5 +1,6 @@
 package pacman;
 
+
 public class PacmanSimulator {
    private PacmanState state;
    private Pacman pacman;
@@ -15,10 +16,10 @@ public class PacmanSimulator {
 
    public void gameLoop() {
       while (!state.isFinalState()) {
-         this.state.move(pacman.chooseAction(state));
-         this.pv.update(state);
+         state = state.move(pacman.chooseAction(state));
+         pv.update(state);
          long time = System.currentTimeMillis();
-         for (long i = time ; i < time + refreshPeriod ; i+= 0.05);
+         while (System.currentTimeMillis() < time + refreshPeriod) {}
       }
       System.out.println(state.getScore());
    }

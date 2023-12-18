@@ -23,6 +23,7 @@ public class PacmanDFSTeleport implements Pacman {
          }
       }
 
+
       return stack.pop();
    }
 }
