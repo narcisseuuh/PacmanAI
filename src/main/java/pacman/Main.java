@@ -23,9 +23,9 @@ public class Main {
 
         Position pacman = new Position(4, 7);
         PacmanState state = new PacmanState(board, pacman, 0);
-        PacmanDFSTeleport pacmanDFS = new PacmanDFSTeleport();
+        PacmanAStarTeleport pacmanAStar = new PacmanAStarTeleport(state);
 
-        PacmanSimulator simulate = new PacmanSimulator(state, pacmanDFS, 500);
+        PacmanSimulator simulate = new PacmanSimulator(state, pacmanAStar, 50);
         simulate.gameLoop();
     }
 }

@@ -81,13 +81,13 @@ public class PacmanState {
     public ArrayList findPossibleMoves() {
         ArrayList moves = new ArrayList<Position>();
         Position left = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() - 1);
-        if (this.get(left) == ' ') moves.add(left);
+        if (this.get(left) == ' ' || this.get(left) == '.') moves.add(left);
         Position right = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() + 1);
-        if (this.get(right) == ' ') moves.add(right);
+        if (this.get(right) == ' ' || this.get(right) == '.') moves.add(right);
         Position upper = new Position(pacmanPosition.getRow() + 1, pacmanPosition.getCol());
-        if (this.get(upper) == ' ') moves.add(upper);
+        if (this.get(upper) == ' ' || this.get(upper) == '.') moves.add(upper);
         Position lower = new Position(pacmanPosition.getRow() - 1, pacmanPosition.getCol());
-        if (this.get(lower) == ' ') moves.add(lower);
+        if (this.get(lower) == ' ' || this.get(lower) == '.') moves.add(lower);
         return moves;
     }
 
@@ -98,7 +98,7 @@ public class PacmanState {
     public PacmanState move(Position to) {
         PacmanState newboard = new PacmanState(this.copyBoard(), to, score + 1);
 
-        newboard.set(this.pacmanPosition, 'V');
+        newboard.set(this.findPacman(), 'V');
         newboard.set(to, 'P');
         
 
