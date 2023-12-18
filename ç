@@ -23,11 +23,7 @@ public class Main {
             """;
 
         Position pacman = new Position(4, 7);
-        Position pacduplicate = new Position(4, 7);
-        ArrayList<Position> alreadyVisited = new ArrayList<Position>();
-        alreadyVisited.add(pacman);
-        System.out.println(alreadyVisited.contains(pacduplicate));
-        PacmanState state = new PacmanState(board, pacman, 0, alreadyVisited);
+        PacmanState state = new PacmanState(board, pacman, 0, new ArrayList<Position>(pacman));
         PacmanAStarTeleport pacmanAStar = new PacmanAStarTeleport(state);
 
         PacmanSimulator simulate = new PacmanSimulator(state, pacmanAStar, 50);

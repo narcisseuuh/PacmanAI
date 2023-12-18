@@ -18,12 +18,11 @@ public class PacmanAStarTeleport implements Pacman {
 
       while (iter.hasNext()) {
          Position newPos = iter.next();
-         if (!cout.containsKey(newPos)) {
+         if (!cout.containsKey(newPos) && !toVisit.contains(newPos)) {
             cout.put(newPos, state.findPacman().dist(newPos));
             toVisit.add(newPos);
          } else {
             cout.replace(newPos, cout.get(newPos) + state.findPacman().dist(newPos));
-            toVisit.add(newPos);
          }
       }
 

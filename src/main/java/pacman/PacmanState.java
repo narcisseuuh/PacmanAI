@@ -8,14 +8,16 @@ public class PacmanState {
     char[][] board;
     Position pacmanPosition;
     int score = 0;
+    private ArrayList<Position> alreadyVisited;
 
-    public PacmanState(char[][] board, Position pacmanPosition, int score) {
+    public PacmanState(char[][] board, Position pacmanPosition, int score, ArrayList<Position> alreadyVisited) {
         this.board = board;
         this.pacmanPosition = pacmanPosition;
         this.score = score;
+        this.alreadyVisited = alreadyVisited;
     }
 
-    public PacmanState(String board, Position pacmanPosition, int score) {
+    public PacmanState(String board, Position pacmanPosition, int score, ArrayList<Position> alreadyVisited) {
         this.pacmanPosition = pacmanPosition;
         String[] lines = board.split("\n");
         this.board = new char[lines.length][lines[0].length()];
@@ -25,6 +27,7 @@ public class PacmanState {
             }
         }
         this.score = score;
+        this.alreadyVisited = alreadyVisited;
     }
     
     public int getWidth() {
@@ -81,13 +84,13 @@ public class PacmanState {
     public ArrayList findPossibleMoves() {
         ArrayList moves = new ArrayList<Position>();
         Position left = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() - 1);
-        if (this.get(left) == ' ' || this.get(left) == '.') moves.add(left);
+        if ((this.get(left) == ' ' || this.get(left) == '.') && !this.alreadyVisited.contains(left)) moves.add(left);
         Position right = new Position(pacmanPosition.getRow(), pacmanPosition.getCol() + 1);
-        if (this.get(right) == ' ' || this.get(right) == '.') moves.add(right);
+        if ((this.get(right) == ' ' || this.get(right) == '.') && !this.alreadyVisited.contains(right)) moves.add(right);
         Position upper = new Position(pacmanPosition.getRow() + 1, pacmanPosition.getCol());
-        if (this.get(upper) == ' ' || this.get(upper) == '.') moves.add(upper);
+        if ((this.get(upper) == ' ' || this.get(upper) == '.') && !this.alreadyVisited.contains(upper)) moves.add(upper);
         Position lower = new Position(pacmanPosition.getRow() - 1, pacmanPosition.getCol());
-        if (this.get(lower) == ' ' || this.get(lower) == '.') moves.add(lower);
+        if ((this.get(lower) == ' ' || this.get(lower) == '.') && !this.alreadyVisited.contains(lower)) moves.add(lower);
         return moves;
     }
 
@@ -96,13 +99,21 @@ public class PacmanState {
     }
 
     public PacmanState move(Position to) {
-        PacmanState newboard = new PacmanState(this.copyBoard(), to, score + 1);
+        this.alreadyVisited.add(to);
+        PacmanState newboard = new PacmanState(this.copyBoard(), to, score + 1, this.alreadyVisited);
 
-        newboard.set(this.findPacman(), 'V');
+        newboard.set(this.findPacman(), ' ');
         newboard.set(to, 'P');
         
 
         return newboard;
+    }
+
+    public List<Position> goTo(Position from, Position to) {
+        HashMap<Position, Integer> cout = new HashMap<Position, Integer>();
+        cout.put(initial.findPacman(), 0);
+        PriorityQueue<Position> toVisit = new PriorityQueue<Position>((s1,s2) -> Integer.compare(cout.get(s1), cout.get(s2)));
+        
     }
 
     public boolean isFinalState() {

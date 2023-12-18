@@ -19,9 +19,14 @@ public class Position {
     public int getCol() {
         return this.col;
     }
-
-    public boolean equals(Position pos) {
-        return this.row == pos.getRow() && this.col == pos.getCol();
+    
+    @Override
+    public boolean equals(Object object) {
+        boolean same = false;
+        if (object != null && object instanceof Position) {
+            same = this.row == ((Position) object).getRow() && this.col == ((Position) object).getCol();
+        }
+        return same;
     }
 
     public int hashCode() {
