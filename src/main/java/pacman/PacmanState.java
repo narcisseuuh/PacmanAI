@@ -94,6 +94,19 @@ public class PacmanState {
         return moves;
     }
 
+    public ArrayList findPossibleMoves(Position u) {
+        ArrayList moves = new ArrayList<Position>();
+        Position left = new Position(u.getRow(), u.getCol() - 1);
+        if ((this.get(left) == ' ' || this.get(left) == '.') && !this.alreadyVisited.contains(left)) moves.add(left);
+        Position right = new Position(u.getRow(), u.getCol() + 1);
+        if ((this.get(right) == ' ' || this.get(right) == '.') && !this.alreadyVisited.contains(right)) moves.add(right);
+        Position upper = new Position(u.getRow() + 1, u.getCol());
+        if ((this.get(upper) == ' ' || this.get(upper) == '.') && !this.alreadyVisited.contains(upper)) moves.add(upper);
+        Position lower = new Position(u.getRow() - 1, u.getCol());
+        if ((this.get(lower) == ' ' || this.get(lower) == '.') && !this.alreadyVisited.contains(lower)) moves.add(lower);
+        return moves;
+    }
+
     public char[][] copyBoard() {
         return this.board.clone();
     }
@@ -108,12 +121,46 @@ public class PacmanState {
 
         return newboard;
     }
-
-    public List<Position> goTo(Position from, Position to) {
+    
+    public ArrayList<Position> goTo(Position from, Position to) {
+        ArrayList<Position> path = new ArrayList<Position>();
+        HashMap<Position, Position> preced = new HashMap<Position, Position>();
+        preced.put(from, from);
         HashMap<Position, Integer> cout = new HashMap<Position, Integer>();
-        cout.put(initial.findPacman(), 0);
-        PriorityQueue<Position> toVisit = new PriorityQueue<Position>((s1,s2) -> Integer.compare(cout.get(s1), cout.get(s2)));
-        
+        cout.put(from, 0);
+        PriorityQueue<Position> toVisit = new PriorityQueue<Position>((s1,s2) -> Integer.compare(cout.get(s1) + s1.dist(to), cout.get(s2) + s2.dist(to)));
+        toVisit.add(from);
+        while (!toVisit.isEmpty()) {
+            Position u = toVisit.peek();
+            toVisit.remove(u);
+
+            if (u.equals(to)) {
+                // reconstitute path :
+                Position v = preced.get(u);
+                while (!v.equals(from)) {
+                    path.add(0, v);
+                    v = preced.get(v);
+                }
+                path.add(0, from);
+                return path;
+            }
+
+            ArrayList<Position> moves = this.findPossibleMoves(u);
+            Iterator<Position> iter = moves.iterator();
+
+            while (iter.hasNext()) {
+                Position v = iter.next();
+                if (!(path.contains(v) || (toVisit.contains(v) && (cout.get(u)+1 <= cout.get(v))))) {
+                    cout.put(v, cout.get(u) + 1);
+                    preced.put(v, u);
+                    if (!toVisit.contains(v)) {
+                        toVisit.add(v);
+                    }
+                }
+            }
+        }
+        /// can't find the path :
+        return path;
     }
 
     public boolean isFinalState() {
